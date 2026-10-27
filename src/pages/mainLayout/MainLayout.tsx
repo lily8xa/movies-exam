@@ -1,7 +1,11 @@
 import {Outlet} from "react-router";
+import {Movies} from "../../components/movies/Movies.tsx";
 
 export const MainLayout = () => {
     return (
-        <><Outlet/></>
+        <div> <Outlet/>
+            <Movies/>
+
+        </div>
     );
 };

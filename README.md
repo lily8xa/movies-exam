@@ -73,3 +73,6 @@ export default defineConfig([
 ])
 
 ```
+VITE_API_BASE_URL=https://api.themoviedb.org/3/discover/movie
+VITE_API_KEY=ca1d19b1f8abfdaad960f198318e5127
+VITE_API_TOKEN=eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJjYTFkMTliMWY4YWJmZGFhZDk2MGYxOTgzMThlNTEyNyIsIm5iZiI6MTc5MzA5NDIwNC43MzgsInN1YiI6IjZhZTA3MjNjZDRkYzVjZWI2Y2U2ZTYxYyIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.QERHxZGR9qhjEBROePnVMO81oZwcT4rXVeZlYaEGRoE
