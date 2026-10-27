@@ -17,7 +17,7 @@ const initialState:MovieSliceType={
 
 export const loadMovies=createAsyncThunk<MovieType[],number>(
     'postSlice,loadPosts',
-    async(page:number,thuncAPI)=>{
+    async(page,thuncAPI)=>{
         try{
             const response = await apiService.get<{ results: MovieType[] }>('/3/discover/movie', {params: { page }});
             const movies = response.data.results;

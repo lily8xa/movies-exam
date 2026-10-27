@@ -5,7 +5,6 @@ export const MainLayout = () => {
     return (
         <div> <Outlet/>
             <Movies/>
-
         </div>
     );
 };

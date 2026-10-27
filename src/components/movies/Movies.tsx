@@ -10,6 +10,7 @@ export const Movies = () => {
     const dispatch = useAppDispatch();
     const [searchParams] = useSearchParams();
     const currentPage = Number(searchParams.get("page") || "1");
+    // const currentGenre = searchParams.get("genre") || "";
     const { results, totalPages } = useAppSelector((state) => state.movieSlice);
     useEffect(() => {
         dispatch(loadMovies(currentPage));
@@ -17,8 +18,9 @@ export const Movies = () => {
 
     console.log(results);
     return (
-        <> <Pagination total={(totalPages || 1) * 20} limit={20} />
+        <>
             {results.map((movie) => <Movie key={movie.id}{...movie}/>)}
+            <Pagination total={(totalPages || 1) * 20} limit={20} />
         </>
     );
 };
