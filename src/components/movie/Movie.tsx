@@ -2,6 +2,7 @@ import type {FC} from "react";
 import type {MovieType} from "../../models/movieType/MovieType.ts";
 import {Rating} from "react-simple-star-rating";
 import {useNavigate} from "react-router";
+import {Genres} from "../genres/Genres.tsx";
 
 
 export const Movie:FC<MovieType> = ({id,title,overview,poster_path,genre_ids,vote_average}) => {
@@ -43,7 +44,9 @@ export const Movie:FC<MovieType> = ({id,title,overview,poster_path,genre_ids,vot
                 />
             </div>
             <p>{overview}</p>
-            <p>Genres-{movieGenres.join(',')}</p>
+            <div>{movieGenres.map((name, index) => (
+                name ? <Genres key={index} name={name} /> : null
+            ))}</div>
         </div>
     );
 };

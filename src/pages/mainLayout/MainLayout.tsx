@@ -1,11 +1,11 @@
-import {Movies} from "../../components/movies/Movies.tsx";
 import {Menu} from "../../components/menu/Menu.tsx";
+import {Outlet} from "react-router";
 
 export const MainLayout = () => {
     return (
         <div>
             <Menu/>
-            <Movies/>
+            <Outlet/>
 
         </div>
     );

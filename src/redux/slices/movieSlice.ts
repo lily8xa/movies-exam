@@ -1,6 +1,20 @@
 import {createAsyncThunk, createSlice, type PayloadAction} from "@reduxjs/toolkit";
 import type {MovieType} from "../../models/movieType/MovieType.ts";
 import {apiService} from "../../services/service/.api.service.ts";
+export interface MovieDetailType {
+    id: number;
+    title: string;
+    original_title: string;
+    original_language: string;
+    overview: string;
+    backdrop_path: string | null;
+    poster_path: string | null;
+    release_date: string;
+    runtime: number | null;
+    budget: number;
+    status: string;
+    genres: { id: number; name: string }[];
+}
 type MovieSliceType={
     results:MovieType[],
     currentPage: number;
@@ -9,7 +23,7 @@ type MovieSliceType={
     error: string | null;
     selectedGenre: number | null;
     searchQuery: string;
-    selectedMovie: null;
+    selectedMovie: MovieDetailType | null;
 }
 const initialState:MovieSliceType={
     results:[],
@@ -58,7 +72,7 @@ export const loadMovies= createAsyncThunk<
         }
     }
 );
-export const loadMovieById = createAsyncThunk<string>(
+export const loadMovieById = createAsyncThunk<MovieDetailType,string>(
     'moviesSlice/loadMovieById',
     async (movieId, thunkAPI) => {
         try {
@@ -87,7 +101,20 @@ export const movieSlice=createSlice({
         .addCase(loadMovies.rejected,(state,action)=>{
             console.log(state,action)
 })
+        .addCase(loadMovieById.pending, (state) => {
+            state.loading = true;
+            state.selectedMovie = null; // Очищуємо старий фільм перед новим завантаженням
+        })
+        .addCase(loadMovieById.fulfilled, (state, action) => {
+            state.loading = false;
+            state.selectedMovie = action.payload; // <-- Зберігаємо дані з сервера в стейт!
+        })
+        .addCase(loadMovieById.rejected, (state) => {
+            state.loading = false;
+            state.error = 'Помилка завантаження деталей фільму';
+        })
+
 })
 export const movieSliceAction={
-    ...movieSlice.actions,loadMovies
+    ...movieSlice.actions,loadMovies,loadMovieById
 }
