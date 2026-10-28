@@ -1,4 +1,4 @@
-import type {FC} from "react";
+import {type FC, useEffect} from "react";
 import {useSearchParams} from "react-router";
 
 interface PaginationProps {
@@ -21,6 +21,12 @@ interface PaginationProps {
         const calculatedMaxPage = Math.ceil(safeTotal / safeLimit);
 
         const maxPage = calculatedMaxPage > 500 ? 500 : calculatedMaxPage;
+        useEffect(() => {
+            window.scrollTo({
+                top: 0,
+                behavior: "smooth"
+            });
+        }, [currentPage]);
 
 
         console.log({ currentPage, maxPage });

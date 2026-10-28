@@ -2,25 +2,49 @@ import {useAppSelector} from "../../hooks/UseAppSelector.tsx";
 import {useAppDispatch} from "../../hooks/UseAppDispatch.tsx";
 import {useEffect} from "react";
 import {Movie} from "../movie/Movie.tsx";
-import {loadMovies} from "../../redux/slices/movieSlice.ts";
 import {Pagination} from "../../pagination/Pagination.tsx";
 import {useSearchParams} from "react-router";
+import {movieSliceAction} from "../../redux/slices/movieSlice.ts";
+import type {MovieType} from "../../models/movieType/MovieType.ts";
+import {GenreButton} from "../genre-button/GenreButton.tsx";
 
 export const Movies = () => {
     const dispatch = useAppDispatch();
     const [searchParams] = useSearchParams();
-    const currentPage = Number(searchParams.get("page") || "1");
-    // const currentGenre = searchParams.get("genre") || "";
-    const { results, totalPages } = useAppSelector((state) => state.movieSlice);
+    const currentPage = Number(searchParams.get("page")) || 1;
+    const movies = useAppSelector((state) => state.movieSlice.results) || [];
+    const selectedGenre = useAppSelector((state) => state.movieSlice.selectedGenre);
+    const searchQuery = useAppSelector((state) => state.movieSlice.searchQuery) || '';
+    const serverTotalPages = useAppSelector((state) => state.movieSlice.totalPages) || 1;
     useEffect(() => {
-        dispatch(loadMovies(currentPage));
-    }, [dispatch, currentPage]);
+        // ПЕРЕДАЄМО ПОВНИЙ ОБ'ЄКТ, ЩОБ TS НЕ ЛАМАВ ЗБІРКУ:
+        dispatch(movieSliceAction.loadMovies({
+            page: currentPage,
+            genreId: selectedGenre,
+            searchQuery: searchQuery
+        }));
+    }, [dispatch, currentPage, selectedGenre, searchQuery]);
+    const filterMovies = movies;
+    const ITEMS_PER_PAGE = 20;
+    const displayTotalPages = selectedGenre === null
+        ? serverTotalPages
+        : Math.ceil(filterMovies.length / ITEMS_PER_PAGE) || 1;
+  return (
+        <div>
+            <GenreButton />
 
-    console.log(results);
-    return (
-        <>
-            {results.map((movie) => <Movie key={movie.id}{...movie}/>)}
-            <Pagination total={(totalPages || 1) * 20} limit={20} />
-        </>
+            <div>
+                {filterMovies.length > 0 ? (
+                    filterMovies.map((movie: MovieType) => (
+                        <Movie key={movie.id} {...movie} />
+                    ))
+                ) : (
+                    <div>
+                        <h3>У цьому списку немає фільмів із вибраним жанром</h3>
+                    </div>
+                )}
+            </div>
+                <Pagination total={displayTotalPages * ITEMS_PER_PAGE} limit={ITEMS_PER_PAGE}/>
+        </div>
     );
 };

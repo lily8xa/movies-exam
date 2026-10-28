@@ -44,28 +44,9 @@ export const Genres = () => {
 //         </div>
 //     );
 // };
-    // return (
-    //     <div><ul>
-    //         <li><Link to={''}>Action</Link></li>
-    //         <li><Link to={''}>Adventure</Link></li>
-    //         <li><Link to={''}>Animation</Link></li>
-    //         <li><Link to={''}>Comedy</Link></li>
-    //         <li><Link to={''}>Crime</Link></li>
-    //         <li><Link to={''}>Drama</Link></li>
-    //         <li><Link to={''}>Family</Link></li>
-    //         <li><Link to={''}>Fantasy</Link></li>
-    //         <li><Link to={''}>History</Link></li>
-    //         <li><Link to={''}>Horror</Link></li>
-    //         <li><Link to={''}>Music</Link></li>
-    //         <li><Link to={''}>Mystery</Link></li>
-    //         <li><Link to={''}>Romance</Link></li>
-    //         <li><Link to={''}>Science Fiction</Link></li>
-    //         <li><Link to={''}>TV Movie</Link></li>
-    //         <li><Link to={''}>Thriller</Link></li>
-    //         <li><Link to={''}>War</Link></li>
-    //         <li><Link to={''}>Western</Link></li>
-    //     </ul>
-    //     </div>
-    // );
+    return (
+        <div>
+        </div>
+    );
 
 }

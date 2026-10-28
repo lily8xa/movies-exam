@@ -10,18 +10,19 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@hookform/resolvers": "^5.9.1",
+    "@reduxjs/toolkit": "^2.13.0",
     "@tailwindcss/vite": "^4.3.3",
+    "axios": "^1.20.0",
+    "joi": "^18.2.9",
     "react": "^19.3.1",
     "react-dom": "^19.3.1",
-    "tailwindcss": "^4.3.3",
-    "react-router-dom": "^7.18.2",
-    "react-router": "^8.3.0",
     "react-hook-form": "^7.88.0",
-    "joi": "^18.2.9",
-    "@hookform/resolvers": "^5.9.1",
-    "axios": "^1.20.0",
     "react-redux": "^9.3.0",
-    "@reduxjs/toolkit": "^2.13.0"
+    "react-router": "^8.3.0",
+    "react-router-dom": "^7.18.2",
+    "react-simple-star-rating": "^5.1.7",
+    "tailwindcss": "^4.3.3"
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",

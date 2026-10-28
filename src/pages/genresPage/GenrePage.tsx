@@ -1,5 +1,7 @@
 export const GenrePage = () => {
     return (
-        <></>
+        <>
+
+        </>
     );
 };

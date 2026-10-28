@@ -7,32 +7,64 @@ type MovieSliceType={
     totalPages: number;
     loading: boolean;
     error: string | null;
+    selectedGenre: number | null;
+    searchQuery: string;
 }
 const initialState:MovieSliceType={
     results:[],
     currentPage: 1,
     totalPages: 1,
     loading: false,
-    error: null}
+    error: null,
+    selectedGenre: null,
+    searchQuery: ''
+}
+interface MovieQueryParams {
+    page: number;
+    query?: string;
+    with_genres?: number;
+}
+export const loadMovies= createAsyncThunk<
+    MovieType[],
+    { page: number; genreId: number | null; searchQuery: string }
+>(
+    'moviesSlice/loadMovies',
+    async ({ page, genreId, searchQuery }, thunkAPI) => {
+        try {
+            // 1. Використовуємо строгу типізацію параметрів запиту без any
+            const queryParams: MovieQueryParams = { page };
+            let currentUrl = '/3/discover/movie';
 
-export const loadMovies=createAsyncThunk<MovieType[],number>(
-    'postSlice,loadPosts',
-    async(page,thuncAPI)=>{
-        try{
-            const response = await apiService.get<{ results: MovieType[] }>('/3/discover/movie', {params: { page }});
+            // 2. Якщо користувач щось ввів — перемикаємося на пошуковий ендпоінт
+            if (searchQuery && searchQuery.trim() !== '') {
+                currentUrl = '/3/search/movie';
+                queryParams.query = searchQuery; // Додаємо обов'язковий текст для пошуку
+            } else if (genreId !== null) {
+                queryParams.with_genres = genreId; // Якщо пошуку немає, фільтруємо за жанром
+            }
+
+            // 3. Відправляємо динамічний URL та параметри в апі-сервіс
+            const response = await apiService.get<{ results: MovieType[] }>(currentUrl, {
+                params: queryParams
+            });
+
             const movies = response.data.results;
-            console.log(movies);
-            return thuncAPI.fulfillWithValue(movies);
-        }catch (error){
+            return thunkAPI.fulfillWithValue(movies);
+        } catch (error) {
             console.log(error);
-            return thuncAPI.rejectWithValue('some error')
+            return thunkAPI.rejectWithValue('some error');
         }
     }
-)
+);
 export const movieSlice=createSlice({
     name:'movieSlice',
     initialState:initialState,
-    reducers:{},
+    reducers:{setSelectedGenre: (state, action: PayloadAction<number | null>) => {
+            state.selectedGenre = action.payload;
+        },  setSearchQuery: (state, action: PayloadAction<string>) => {
+            state.searchQuery = action.payload;
+        }
+        },
     extraReducers:(builder)=>builder
         .addCase(loadMovies.fulfilled,(state,action:PayloadAction<MovieType[]>)=>{
             state.results=action.payload
