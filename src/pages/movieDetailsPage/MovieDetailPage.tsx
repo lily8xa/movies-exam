@@ -1,4 +1,4 @@
-export const GenrePage = () => {
+export const MovieDetailPage = () => {
     return (
         <>
 

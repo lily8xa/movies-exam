@@ -9,6 +9,7 @@ type MovieSliceType={
     error: string | null;
     selectedGenre: number | null;
     searchQuery: string;
+    selectedMovie: null;
 }
 const initialState:MovieSliceType={
     results:[],
@@ -17,7 +18,8 @@ const initialState:MovieSliceType={
     loading: false,
     error: null,
     selectedGenre: null,
-    searchQuery: ''
+    searchQuery: '',
+    selectedMovie:null
 }
 interface MovieQueryParams {
     page: number;
@@ -53,6 +55,19 @@ export const loadMovies= createAsyncThunk<
         } catch (error) {
             console.log(error);
             return thunkAPI.rejectWithValue('some error');
+        }
+    }
+);
+export const loadMovieById = createAsyncThunk<string>(
+    'moviesSlice/loadMovieById',
+    async (movieId, thunkAPI) => {
+        try {
+            // Робимо запит до TMDB за конкретним ID фільму
+            const response = await apiService.get(`/3/movie/${movieId}`);
+            return thunkAPI.fulfillWithValue(response.data);
+        } catch (error) {
+            console.log(error);
+            return thunkAPI.rejectWithValue('Error loading movie details');
         }
     }
 );

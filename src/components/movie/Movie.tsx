@@ -1,10 +1,12 @@
 import type {FC} from "react";
 import type {MovieType} from "../../models/movieType/MovieType.ts";
 import {Rating} from "react-simple-star-rating";
+import {useNavigate} from "react-router";
 
 
 export const Movie:FC<MovieType> = ({id,title,overview,poster_path,genre_ids,vote_average}) => {
     const imgBaseUrl = "https://image.tmdb.org/t/p/w500";
+    const navigate = useNavigate();
     const genreName:{id:number,name:string}[]=[
         {id: 28, name: "Action"},
         {id: 12, name: "Adventure"},
@@ -30,7 +32,7 @@ export const Movie:FC<MovieType> = ({id,title,overview,poster_path,genre_ids,vot
         .map((id) => genreName.find((g) => g.id === id)?.name)
         .filter(Boolean);
     return (
-        <div>
+        <div onClick={() => navigate(`/movies/${id}`)} >
             <h1>{title}-{id}</h1>
             <img src={`${imgBaseUrl}${poster_path}`} alt={title}/>
             <div>
