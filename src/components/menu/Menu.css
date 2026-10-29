@@ -1,0 +1,42 @@
+.main-menu{
+    padding: 20px;
+    margin: 30px;
+    background: rgba(73, 195, 195, 0.58);
+    border-radius: 30px;
+    box-shadow: 2px 2px 4px rgba(255, 254, 254, 0.75);
+    max-width: 100%;
+}
+.logo {
+    font-weight: bold;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+    border: 3px solid rgb(20, 20, 97);
+    padding: 10px 20px;
+    background: rgba(26, 152, 152, 0.82);
+    border-radius: 20px;
+}
+.main-li{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    font-size: 40px;
+    gap: 50px;
+    padding: 0 30px;
+
+}
+a {
+    display: flex;
+    color: #021e4e;
+    font-weight: 500;
+    transition: color 0.2s ease, opacity 0.2s ease;
+}
+
+a:hover {
+    color: #b6b6e6;
+    transform: scale(1.2);
+    text-shadow: #021e4e 1px 1px 1px;
+}
+
+a:active {
+    transform: scale(0.98);
+}

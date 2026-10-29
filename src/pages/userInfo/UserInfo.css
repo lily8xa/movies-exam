@@ -1,0 +1,11 @@
+.main-user{
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap:5px;
+    font-size: 40px;
+}
+.user-img{
+    height: 50px;
+    border-radius: 40px;
+}

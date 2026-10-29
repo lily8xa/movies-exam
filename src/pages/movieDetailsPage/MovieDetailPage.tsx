@@ -3,12 +3,14 @@ import {useNavigate, useParams} from "react-router";
 import {useAppDispatch} from "../../hooks/UseAppDispatch.tsx";
 import {useAppSelector} from "../../hooks/UseAppSelector.tsx";
 import {movieSliceAction} from "../../redux/slices/movieSlice.ts";
+import {Genres} from "../../components/genres/Genres.tsx";
 
 export const MovieDetailPage: FC = () => {
     const { id } = useParams<{ id: string }>();
     const dispatch = useAppDispatch();
     const navigate = useNavigate();
     const selectedMovie = useAppSelector((state) => state.movieSlice.selectedMovie);
+    console.log(selectedMovie)
     const loading = useAppSelector((state) => state.movieSlice.loading);
     const imgBaseUrl ="https://image.tmdb.org/t/p/w500";
 
@@ -27,9 +29,13 @@ export const MovieDetailPage: FC = () => {
             </div>
             <div>
                 <h1>{selectedMovie.title}</h1>
-                <h3>Original Title: {selectedMovie.original_title}</h3>
+                <h3># "{selectedMovie.tagline}"</h3>
+                <h3>Original Title: {selectedMovie.original_title}. Run time-{selectedMovie.runtime}</h3>
                 <p>Original Language: {selectedMovie.original_language}</p>
                 <p>Release Date: {selectedMovie.release_date}</p>
+                <div>Genres{selectedMovie.genres.map((name, index) => (
+                    name ? <Genres key={index} name={name.name} /> : null
+                ))}</div>
                 <div>
                     <strong>Description:</strong>
                     <p>{selectedMovie.overview}</p>

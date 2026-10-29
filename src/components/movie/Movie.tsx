@@ -3,9 +3,10 @@ import type {MovieType} from "../../models/movieType/MovieType.ts";
 import {Rating} from "react-simple-star-rating";
 import {useNavigate} from "react-router";
 import {Genres} from "../genres/Genres.tsx";
+import './Movie.css'
 
 
-export const Movie:FC<MovieType> = ({id,title,overview,poster_path,genre_ids,vote_average}) => {
+export const Movie:FC<MovieType> = ({id,title,poster_path,genre_ids,vote_average}) => {
     const imgBaseUrl = "https://image.tmdb.org/t/p/w500";
     const navigate = useNavigate();
     const genreName:{id:number,name:string}[]=[
@@ -33,18 +34,14 @@ export const Movie:FC<MovieType> = ({id,title,overview,poster_path,genre_ids,vot
         .map((id) => genreName.find((g) => g.id === id)?.name)
         .filter(Boolean);
     return (
-        <div onClick={() => navigate(`/movies/${id}`)} >
-            <h1>{title}-{id}</h1>
+        <div className={'movie-main'} onClick={() => navigate(`/movies/${id}`)} >
             <img src={`${imgBaseUrl}${poster_path}`} alt={title}/>
-            <div>
-                <Rating
-                    initialValue={vote_average / 2}
-                    readonly={true}
-                    size={20}
-                />
-            </div>
-            <p>{overview}</p>
-            <div>{movieGenres.map((name, index) => (
+            <div className={'movie-rating-wrapper'}><Rating className={'movie-rating-wrapper'}
+                initialValue={vote_average / 2}
+                readonly={true}
+                size={20}/></div>
+            <h1>{title}</h1>
+            <div className={'genres-movie'}>Genres: {movieGenres.map((name, index) => (
                 name ? <Genres key={index} name={name} /> : null
             ))}</div>
         </div>

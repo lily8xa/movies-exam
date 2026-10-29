@@ -2,6 +2,7 @@ import {useAppDispatch} from "../../hooks/UseAppDispatch.tsx";
 import {useNavigate} from "react-router";
 import {useAppSelector} from "../../hooks/UseAppSelector.tsx";
 import {movieSliceAction} from "../../redux/slices/movieSlice.ts";
+import './SearchInpnt.css'
 
 export function SearchInput() {
     const dispatch = useAppDispatch();
@@ -13,12 +14,13 @@ export function SearchInput() {
         navigate('/');
     };
     return (
-        <><input
+        <><input className={'movie-search-input'}
             type="text"
             maxLength={30}
-            placeholder="Enter movie name"
+            placeholder=" Enter movie name"
             value={searchQuery}
             onChange={(e) => handleSearchChange(e.target.value)}
-        /></>
+        />
+        </>
     );
 }

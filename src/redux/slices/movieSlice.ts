@@ -1,21 +1,8 @@
 import {createAsyncThunk, createSlice, type PayloadAction} from "@reduxjs/toolkit";
 import type {MovieType} from "../../models/movieType/MovieType.ts";
 import {apiService} from "../../services/service/.api.service.ts";
+import type {MovieDetailType} from "../../models/movieType/MovieDetailType.ts";
 
-export interface MovieDetailType {
-    id: number;
-    title: string;
-    original_title: string;
-    original_language: string;
-    overview: string;
-    backdrop_path: string | null;
-    poster_path: string | null;
-    release_date: string;
-    runtime: number | null;
-    budget: number;
-    status: string;
-    genres: { id: number; name: string }[];
-}
 type MovieSliceType={
     results:MovieType[],
     currentPage: number;

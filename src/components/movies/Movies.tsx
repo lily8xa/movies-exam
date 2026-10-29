@@ -7,6 +7,7 @@ import {useSearchParams} from "react-router";
 import {movieSliceAction} from "../../redux/slices/movieSlice.ts";
 import type {MovieType} from "../../models/movieType/MovieType.ts";
 import {GenreButton} from "../genre-button/GenreButton.tsx";
+import './Movies.css'
 
 export const Movies = () => {
     const dispatch = useAppDispatch();
@@ -31,14 +32,17 @@ export const Movies = () => {
   return (
         <div>
             <GenreButton />
-            <div>
-                {filterMovies.length > 0 ? (
-                    filterMovies.map((movie: MovieType) => (
-                        <Movie key={movie.id} {...movie} />
-                    ))
-                ) : (<div><h3>There are no films of this genre</h3></div>)}
-            </div>
+            <div className={'main-movies'}>
+                <div className={'movies-container'}>
+                    {filterMovies.length > 0 ? (
+                        filterMovies.map((movie: MovieType) => (
+                            <Movie key={movie.id} {...movie} />
+                        ))
+                    ) : (<div><h3>There are no films of this genre</h3></div>)}
+                </div>
                 <Pagination total={displayTotalPages * ITEMS_PER_PAGE} limit={ITEMS_PER_PAGE}/>
+            </div>
+
         </div>
     );
 };
