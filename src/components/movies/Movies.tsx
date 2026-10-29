@@ -17,7 +17,6 @@ export const Movies = () => {
     const searchQuery = useAppSelector((state) => state.movieSlice.searchQuery) || '';
     const serverTotalPages = useAppSelector((state) => state.movieSlice.totalPages) || 1;
     useEffect(() => {
-        // ПЕРЕДАЄМО ПОВНИЙ ОБ'ЄКТ, ЩОБ TS НЕ ЛАМАВ ЗБІРКУ:
         dispatch(movieSliceAction.loadMovies({
             page: currentPage,
             genreId: selectedGenre,
@@ -32,17 +31,12 @@ export const Movies = () => {
   return (
         <div>
             <GenreButton />
-
             <div>
                 {filterMovies.length > 0 ? (
                     filterMovies.map((movie: MovieType) => (
                         <Movie key={movie.id} {...movie} />
                     ))
-                ) : (
-                    <div>
-                        <h3>У цьому списку немає фільмів із вибраним жанром</h3>
-                    </div>
-                )}
+                ) : (<div><h3>There are no films of this genre</h3></div>)}
             </div>
                 <Pagination total={displayTotalPages * ITEMS_PER_PAGE} limit={ITEMS_PER_PAGE}/>
         </div>

@@ -1,6 +1,7 @@
 import {createAsyncThunk, createSlice, type PayloadAction} from "@reduxjs/toolkit";
 import type {MovieType} from "../../models/movieType/MovieType.ts";
 import {apiService} from "../../services/service/.api.service.ts";
+
 export interface MovieDetailType {
     id: number;
     title: string;
@@ -24,6 +25,7 @@ type MovieSliceType={
     selectedGenre: number | null;
     searchQuery: string;
     selectedMovie: MovieDetailType | null;
+
 }
 const initialState:MovieSliceType={
     results:[],
@@ -33,7 +35,7 @@ const initialState:MovieSliceType={
     error: null,
     selectedGenre: null,
     searchQuery: '',
-    selectedMovie:null
+    selectedMovie:null,
 }
 interface MovieQueryParams {
     page: number;
@@ -86,14 +88,16 @@ export const loadMovieById = createAsyncThunk<MovieDetailType,string>(
     }
 );
 export const movieSlice=createSlice({
-    name:'movieSlice',
-    initialState:initialState,
-    reducers:{setSelectedGenre: (state, action: PayloadAction<number | null>) => {
+    name: 'movieSlice',
+    initialState: initialState,
+    reducers: {
+        setSelectedGenre: (state, action: PayloadAction<number | null>) => {
             state.selectedGenre = action.payload;
-        },  setSearchQuery: (state, action: PayloadAction<string>) => {
+        }, setSearchQuery: (state, action: PayloadAction<string>) => {
             state.searchQuery = action.payload;
-        }
         },
+},
+
     extraReducers:(builder)=>builder
         .addCase(loadMovies.fulfilled,(state,action:PayloadAction<MovieType[]>)=>{
             state.results=action.payload
@@ -111,7 +115,7 @@ export const movieSlice=createSlice({
         })
         .addCase(loadMovieById.rejected, (state) => {
             state.loading = false;
-            state.error = 'Помилка завантаження деталей фільму';
+            state.error = 'Error';
         })
 
 })
