@@ -1,5 +1,7 @@
 import {type FC, useEffect} from "react";
 import {useSearchParams} from "react-router";
+import './Pagination.css'
+
 
 interface PaginationProps {
         total: number;
@@ -31,12 +33,12 @@ interface PaginationProps {
 
         console.log({ currentPage, maxPage });
     return (
-        <div>
-            <button onClick={()=>{
+        <div className={''}>
+            <button className={'pag-button'} onClick={()=>{
                 if(currentPage>1){
                     setSearchParam({page:(--currentPage).toString()})
                 }}}>Prev</button>
-            <button className={'button'} onClick={()=>{
+            <button className={'pag-button'} onClick={()=>{
                 setSearchParam({page:(currentPage+1).toString()
                 })
             }}

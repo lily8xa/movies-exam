@@ -1,0 +1,22 @@
+.pag-button{
+    width: 120px;
+    gap: 10px;
+        padding: 20px;
+        margin: 30px;
+        background: rgba(73, 195, 195, 0.58);
+        border-radius: 20px;
+        max-width: 100%;
+    }
+.pag-button:hover {
+        background: rgba(58, 175, 169, 0.4);
+        border-color: #3aafa9;
+        color: #ffffff;
+        box-shadow: 0 0 15px rgba(58, 175, 169, 0.6);
+        transform: translateY(-2px);
+    }
+.pag-button:active {
+        transform: translateY(1px); /* Кнопка фізично прогинається при кліку */
+        background: rgba(43, 122, 120, 0.6);
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+    }
+

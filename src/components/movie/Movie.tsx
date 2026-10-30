@@ -40,10 +40,13 @@ export const Movie:FC<MovieType> = ({id,title,poster_path,genre_ids,vote_average
                 initialValue={vote_average / 2}
                 readonly={true}
                 size={20}/></div>
-            <h1>{title}</h1>
-            <div className={'genres-movie'}>Genres: {movieGenres.map((name, index) => (
-                name ? <Genres key={index} name={name} /> : null
-            ))}</div>
+            <div className={'name-genre'}>
+                <h1>{title}</h1>
+                <div className={'genres-movie'}>Genres: {movieGenres.map((name, index) => (
+                    name ? <Genres key={index} name={name} /> : null
+                ))}</div>
+            </div>
+
         </div>
     );
 };

@@ -5,11 +5,10 @@
     gap: 10px;
     padding: 20px;
     margin: 30px;
-    background: rgba(73, 195, 195, 0.58);
+    background: rgba(73, 195, 195, 0.16);
     border-radius: 30px;
     box-shadow: 2px 2px 4px rgba(255, 254, 254, 0.75);
     max-width: 100%;
-
 }
 .movie-btn {
     width: 250px;
@@ -29,7 +28,6 @@
     outline: none;
 }
 
-/* Ефект при наведенні курсору (Hover) */
 .movie-btn:hover {
     background: rgba(58, 175, 169, 0.4); /* Яскравіше неоново-бірюзове наповнення */
     border-color: #3aafa9; /* Повністю неоновий контур */
@@ -38,18 +36,10 @@
     transform: translateY(-2px); /* Кнопка злегка підстрибує вгору */
 }
 
-/* Стан активної кнопки / натискання (Active / Click) */
+
 .movie-btn:active {
     transform: translateY(1px); /* Кнопка фізично прогинається при кліку */
     background: rgba(43, 122, 120, 0.6);
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
 }
 
-/* Стан для АКТИВНОЇ сторінки (наприклад, якщо користувач вибрав саме цю кнопку) */
-.movie-btn.active {
-    background: #3aafa9; /* Повністю зафарбована акцентна кнопка */
-    color: #17252a; /* Темний контрастний колір тексту всередині */
-    border-color: #3aafa9;
-    font-weight: 600;
-    box-shadow: 0 0 20px rgba(58, 175, 169, 0.5);
-}

@@ -12,16 +12,15 @@
 [class*="starRatingWrap"] svg {
     display: inline-block !important;
     vertical-align: middle !important;
-    box-sizing: content-box !important; /* Важливо: повертає стандартний простір */
-    overflow: visible !important;       /* Запобігає обрізанню країв зірочок */
+    box-sizing: content-box !important;
+    overflow: visible !important;
 }
 
-/* Виправляємо поведінку масок та внутрішніх шарів зафарбовування */
+
 [class*="starRatingWrap"] svg * {
     box-sizing: content-box !important;
 }
 
-/* Якщо бібліотека використовує накладання двох span (сірого та золотого) один на одного */
 [class*="starRatingWrap"] span {
     display: inline-block !important;
     vertical-align: middle !important;
@@ -31,20 +30,20 @@
 .movie-main img {
     width: 300px;
     margin: 20px 0;
-    border-radius: 12px;    /* Красиве закруглення кутів постера */
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3); /* Об'ємна тінь під постером */
+    border-radius: 12px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
     transition: transform 0.3s ease;
 }
 
 .movie-main img:hover {
-    transform: scale(1.03); /* Легке збільшення постера при наведенні */
+    transform: scale(1.03);
 }
 .movie-main h1 {
     font-family: 'Segoe UI', Roboto, sans-serif;
     font-size: 30px;
     font-weight: 600;
-    color: #feffff;         /* Світлий колір під ваш скляний стиль */
-    margin:  10px;      /* Відступ знизу до жанрів */
+    color: #feffff;
+    margin:  10px;
     line-height: 1.3;
 }
 .genres-movie {
@@ -56,4 +55,12 @@
     font-family: 'Segoe UI', Roboto, sans-serif;
     font-size: 20px;
     font-weight: 600;
+}
+.name-genre{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    flex-grow: 1;
+    margin-bottom: 30px;
 }

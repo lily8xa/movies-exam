@@ -8,7 +8,7 @@ export const Genres:FC<GenreBadgeProps> = ({name}) => {
 
     return (
         <div>
-            {name}
+            {name}{', '}
         </div>
     );
 
