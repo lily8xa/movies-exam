@@ -40,3 +40,16 @@ a:hover {
 a:active {
     transform: scale(0.98);
 }
+.genre{
+    color: #021e4e;
+    font-weight: 500;
+    transition: color 0.2s ease, opacity 0.2s ease;
+}
+.genre:hover{
+    color: #b6b6e6;
+    transform: scale(1.2);
+    text-shadow: #021e4e 1px 1px 1px;
+}
+.genre:active {
+    transform: scale(0.98);
+}

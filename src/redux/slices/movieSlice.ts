@@ -12,7 +12,8 @@ type MovieSliceType={
     selectedGenre: number | null;
     searchQuery: string;
     selectedMovie: MovieDetailType | null;
-
+    isMenuOpen: boolean;
+    sortBy: string;
 }
 const initialState:MovieSliceType={
     results:[],
@@ -23,21 +24,28 @@ const initialState:MovieSliceType={
     selectedGenre: null,
     searchQuery: '',
     selectedMovie:null,
+    isMenuOpen: false,
+    sortBy:'rating',
+
 }
 interface MovieQueryParams {
     page: number;
     query?: string;
     with_genres?: number;
+    sort_by?: string;
 }
 export const loadMovies= createAsyncThunk<
     MovieType[],
-    { page: number; genreId: number | null; searchQuery: string }
+    { page: number; genreId: number | null; searchQuery: string;sortBy:string  }
 >(
     'moviesSlice/loadMovies',
-    async ({ page, genreId, searchQuery }, thunkAPI) => {
+    async ({ page, genreId, searchQuery,sortBy }, thunkAPI) => {
         try {
             // 1. Використовуємо строгу типізацію параметрів запиту без any
-            const queryParams: MovieQueryParams = { page };
+            const queryParams: MovieQueryParams = {
+                page,
+                sort_by: sortBy === 'rating' ? 'vote_average.desc' : 'primary_release_date.desc'
+            };
             let currentUrl = '/3/discover/movie';
 
             // 2. Якщо користувач щось ввів — перемикаємося на пошуковий ендпоінт
@@ -83,6 +91,13 @@ export const movieSlice=createSlice({
         }, setSearchQuery: (state, action: PayloadAction<string>) => {
             state.searchQuery = action.payload;
         },
+        toggleMenu: (state) => {
+            state.isMenuOpen = !state.isMenuOpen;
+        },
+        setSortBy: (state, action: PayloadAction<'rating' | 'date'>) => {
+            state.sortBy = action.payload;
+
+        }
 },
 
     extraReducers:(builder)=>builder

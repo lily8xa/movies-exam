@@ -8,13 +8,13 @@ export const GenreButton=()=> {
     const [searchParams, setSearchParams] = useSearchParams();
     const handleGenreClick =(genreId:number |null)=> {
         dispatch(movieSliceAction.setSelectedGenre(genreId));
-        searchParams.set("page", "1");setSearchParams(searchParams);
+        searchParams.set("page", "1");setSearchParams(searchParams); dispatch(movieSliceAction.toggleMenu());
     };
 
 
     return (
         <div className={'main-buttons'}>
-            <button className={'movie-btn'} onClick={() => handleGenreClick(null)}>Oll</button>
+            <button className={'movie-btn'} onClick={() => handleGenreClick(null)}>All</button>
             <button className={'movie-btn'} onClick={()=>handleGenreClick(28)}>Action</button>
             <button className={'movie-btn'} onClick={()=>handleGenreClick(12)}>Adventure</button>
             <button className={'movie-btn'} onClick={()=>handleGenreClick(16)}>Animation</button>

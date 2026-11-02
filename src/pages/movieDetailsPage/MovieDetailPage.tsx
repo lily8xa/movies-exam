@@ -35,9 +35,11 @@ export const MovieDetailPage: FC = () => {
                 <p>Original Title: {selectedMovie.original_title}. Run time-{selectedMovie.runtime}</p>
                 <p>Original Language: {selectedMovie.original_language}</p>
                 <p>Release Date: {selectedMovie.release_date}</p>
-                <div className={'details-genres'}>Genres: {selectedMovie.genres.map((name, index) => (
-                    name ? <Genres key={index} name={name.name} /> : null
-                ))}</div>
+                <div className={'details-genres'}>Genres: {' '}
+                    {selectedMovie.genres?.map((genre, index, array) => (
+                        <span key={index} style={{ display: 'inline-flex', alignItems: 'center' }}>
+              <Genres name={genre.name} />{index < array.length - 1 && <span style={{ marginRight: '4px' }}>,</span>}</span>))}
+                </div>
                 <div>
                     <strong>Description:</strong>
                     <p className={'details-description'}>{selectedMovie.overview}</p>

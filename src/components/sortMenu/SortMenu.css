@@ -1,0 +1,35 @@
+.sort-box{
+    margin: auto 50px;
+}
+.sort-label{
+
+    color: rgb(255, 255, 255); /* Напівпрозорий білий */
+        font-size: 30px;
+        font-weight: 500;
+
+}
+.sort-select {
+    background-color: rgba(255, 255, 255, 0.08); /* Темний напівпрозорий фон */
+    color: #ffffff; /* Білий текст */
+    border: 1px solid rgba(255, 255, 255, 0.15); /* Тонка межа */
+    padding: 8px 36px 8px 16px; /* Більший відступ справа під кастомну стрілочку */
+    border-radius: 20px; /* Округлені краї як у ваших кнопок */
+    font-size:18px;
+    cursor: pointer;
+    outline: none;
+    transition: all 0.2s ease-in-out;
+    backdrop-filter: blur(10px); /* Ефект розмиття фону */
+
+}
+
+.sort-select:hover {
+    background-color: rgba(255, 255, 255, 0.15);
+    border-color: rgba(255, 255, 255, 0.3);
+}
+
+
+.sort-select option {
+    background-color: #1a232a; /* Темний фон під колір вашого сайту */
+    color: #ffffff;
+    padding: 10px;
+}

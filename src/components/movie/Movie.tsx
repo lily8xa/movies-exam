@@ -6,7 +6,7 @@ import {Genres} from "../genres/Genres.tsx";
 import './Movie.css'
 
 
-export const Movie:FC<MovieType> = ({id,title,poster_path,genre_ids,vote_average}) => {
+export const Movie:FC<MovieType> = ({id,title,poster_path,genre_ids,vote_average,release_date}) => {
     const imgBaseUrl = "https://image.tmdb.org/t/p/w500";
     const navigate = useNavigate();
     const genreName:{id:number,name:string}[]=[
@@ -42,9 +42,14 @@ export const Movie:FC<MovieType> = ({id,title,poster_path,genre_ids,vote_average
                 size={20}/></div>
             <div className={'name-genre'}>
                 <h1>{title}</h1>
-                <div className={'genres-movie'}>Genres: {movieGenres.map((name, index) => (
-                    name ? <Genres key={index} name={name} /> : null
-                ))}</div>
+                <p>{release_date}</p>
+                <div className={'genres-movie'}>
+                    Genres: {' '}{movieGenres
+                        .filter((name): name is string => typeof name === 'string' && name.trim() !== '')
+                        .map((name, index, array) => (
+                            <span key={index} style={{ display: 'inline-flex', alignItems: 'center' }}>
+              <Genres name={name} />{index < array.length - 1 && <span style={{ marginRight: '4px' }}>,</span>}</span>))}
+                </div>
             </div>
 
         </div>

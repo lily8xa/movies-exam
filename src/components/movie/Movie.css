@@ -28,7 +28,7 @@
     box-sizing: content-box !important;
 }
 .movie-main img {
-    width: 300px;
+    height: 400px;
     margin: 20px 0;
     border-radius: 12px;
     box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
@@ -63,4 +63,8 @@
     align-items: center;
     flex-grow: 1;
     margin-bottom: 30px;
+}
+.error-h{
+    font-size: 40px;
+    color: #feffff;
 }
