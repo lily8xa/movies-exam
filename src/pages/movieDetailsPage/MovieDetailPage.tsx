@@ -16,23 +16,14 @@ export const MovieDetailPage: FC = () => {
     const imgBaseUrl ="https://image.tmdb.org/t/p/w500";
     useEffect(() => {if (id) {dispatch(movieSliceAction.loadMovieById(id));}
     }, [dispatch, id]);
-    if (loading) return <div style={{ padding: "40px", color: "white", textAlign: "center" }}>Loading...</div>;
-    if (!selectedMovie) return <div style={{ padding: "40px", color: "white", textAlign: "center" }}>Movie not found</div>;
-
+    if (loading) return <div className={'error-h'}>Loading...</div>;
+    if (!selectedMovie) return <div className={'error-h'}>Movie not found</div>;
     return (
         <div className={'details-main'}>
             <div className={'details-img-but'}>
                 <button className={'pag-button'} onClick={() => navigate(-1)}>Back</button>
-                {/*<button*/}
-                {/*    onClick={() => dispatch(movieSliceAction.toggleFavorite(selectedMovie))}*/}
-                {/*    className="flex items-center gap-2 mt-4 text-white"*/}
-                {/*>*/}
-                {/*    {isCurrentlyFavorite ? '❤️ In Favorites' : '🤍 Love it'}*/}
-                {/*</button>*/}
-                <img
-                    src={`${imgBaseUrl}${selectedMovie.backdrop_path || selectedMovie.poster_path}`}
-                    alt={selectedMovie.title}
-                />
+                <img src={`${imgBaseUrl}${selectedMovie.backdrop_path || selectedMovie.poster_path}`}
+                    alt={selectedMovie.title}/>
             </div>
             <div className={'details-disc'}>
                 <h1>{selectedMovie.title}</h1>

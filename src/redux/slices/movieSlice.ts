@@ -35,33 +35,24 @@ interface MovieQueryParams {
     with_genres?: number;
     sort_by?: string;
 }
-export const loadMovies= createAsyncThunk<
-    MovieType[],
-    { page: number; genreId: number | null; searchQuery: string;sortBy:string  }
->(
+export const loadMovies= createAsyncThunk<MovieType[],
+    { page: number; genreId: number | null; searchQuery: string;sortBy:string  }>(
     'moviesSlice/loadMovies',
     async ({ page, genreId, searchQuery,sortBy }, thunkAPI) => {
         try {
-            // 1. Використовуємо строгу типізацію параметрів запиту без any
             const queryParams: MovieQueryParams = {
                 page,
                 sort_by: sortBy === 'rating' ? 'vote_average.desc' : 'primary_release_date.desc'
             };
             let currentUrl = '/3/discover/movie';
-
-            // 2. Якщо користувач щось ввів — перемикаємося на пошуковий ендпоінт
             if (searchQuery && searchQuery.trim() !== '') {
                 currentUrl = '/3/search/movie';
-                queryParams.query = searchQuery; // Додаємо обов'язковий текст для пошуку
+                queryParams.query = searchQuery;
             } else if (genreId !== null) {
-                queryParams.with_genres = genreId; // Якщо пошуку немає, фільтруємо за жанром
+                queryParams.with_genres = genreId;
             }
-
-            // 3. Відправляємо динамічний URL та параметри в апі-сервіс
             const response = await apiService.get<{ results: MovieType[] }>(currentUrl, {
-                params: queryParams
-            });
-
+                params: queryParams});
             const movies = response.data.results;
             return thunkAPI.fulfillWithValue(movies);
         } catch (error) {
@@ -74,7 +65,6 @@ export const loadMovieById = createAsyncThunk<MovieDetailType,string>(
     'moviesSlice/loadMovieById',
     async (movieId, thunkAPI) => {
         try {
-            // Робимо запит до TMDB за конкретним ID фільму
             const response = await apiService.get(`/3/movie/${movieId}`);
             return thunkAPI.fulfillWithValue(response.data);
         } catch (error) {
@@ -116,11 +106,11 @@ export const movieSlice=createSlice({
 })
         .addCase(loadMovieById.pending, (state) => {
             state.loading = true;
-            state.selectedMovie = null; // Очищуємо старий фільм перед новим завантаженням
+            state.selectedMovie = null;
         })
         .addCase(loadMovieById.fulfilled, (state, action) => {
             state.loading = false;
-            state.selectedMovie = action.payload; // <-- Зберігаємо дані з сервера в стейт!
+            state.selectedMovie = action.payload;
         })
         .addCase(loadMovieById.rejected, (state) => {
             state.loading = false;

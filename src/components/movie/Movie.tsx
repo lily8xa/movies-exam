@@ -43,8 +43,7 @@ export const Movie:FC<MovieType> = ({id,title,poster_path,genre_ids,vote_average
     return (
         <div className={'movie-main'} onClick={() => navigate(`/movies/${id}`)} >
             <button
-                onClick={(e) => {
-                    e.stopPropagation(); // Зупиняємо клік, щоб при натисканні на сердечко не спрацьовував перехід на сторінку деталей (рядок 46)
+                onClick={(e) => {e.stopPropagation();
                     dispatch(movieSliceAction.toggleFavorite({ id, title, poster_path, genre_ids, vote_average, release_date }as MovieType));
                 }}
                 className="flex items-center gap-2 mt-4 text-white"

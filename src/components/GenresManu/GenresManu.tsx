@@ -1,7 +1,7 @@
 import {useAppDispatch} from "../../hooks/UseAppDispatch.tsx";
 import {movieSliceAction} from "../../redux/slices/movieSlice.ts";
 
-export function MainMenu() {
+export function GenresMenu() {
     const dispatch = useAppDispatch();
 
     return (

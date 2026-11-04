@@ -3,22 +3,22 @@
 }
 .sort-label{
 
-    color: rgb(255, 255, 255); /* Напівпрозорий білий */
+    color: rgb(255, 255, 255);
         font-size: 30px;
         font-weight: 500;
 
 }
 .sort-select {
-    background-color: rgba(255, 255, 255, 0.08); /* Темний напівпрозорий фон */
-    color: #ffffff; /* Білий текст */
-    border: 1px solid rgba(255, 255, 255, 0.15); /* Тонка межа */
-    padding: 8px 36px 8px 16px; /* Більший відступ справа під кастомну стрілочку */
-    border-radius: 20px; /* Округлені краї як у ваших кнопок */
+    background-color: rgba(255, 255, 255, 0.08);
+    color: #ffffff;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    padding: 8px 36px 8px 16px;
+    border-radius: 20px;
     font-size:18px;
     cursor: pointer;
     outline: none;
     transition: all 0.2s ease-in-out;
-    backdrop-filter: blur(10px); /* Ефект розмиття фону */
+    backdrop-filter: blur(10px);
 
 }
 
@@ -29,7 +29,7 @@
 
 
 .sort-select option {
-    background-color: #1a232a; /* Темний фон під колір вашого сайту */
+    background-color: #1a232a;
     color: #ffffff;
     padding: 10px;
 }

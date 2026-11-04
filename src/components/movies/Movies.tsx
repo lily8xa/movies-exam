@@ -27,19 +27,15 @@ export const Movies = () => {
         }));
     }, [dispatch, currentPage, selectedGenre, sortBy, searchQuery]);
     const filterMovies: MovieType[] = useMemo(() => {
-        return movies; // Сервер сам надсилає глобально відсортований масив фільмів для кожної сторінки!
+        return movies;
     }, [movies]);
     const ITEMS_PER_PAGE = 20;
     const displayTotalPages = selectedGenre === null
         ? serverTotalPages
         : Math.ceil(filterMovies.length / ITEMS_PER_PAGE) || 1;
-
-
-
-  return (
+    return (
         <div>
             <div className={'main-movies'}>
-
                 <div className={'movies-container'}>
                     {filterMovies.length > 0 ? (
                         filterMovies.map((movie: MovieType) => (
