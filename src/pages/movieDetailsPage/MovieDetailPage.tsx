@@ -14,7 +14,6 @@ export const MovieDetailPage: FC = () => {
     console.log(selectedMovie)
     const loading = useAppSelector((state) => state.movieSlice.loading);
     const imgBaseUrl ="https://image.tmdb.org/t/p/w500";
-
     useEffect(() => {if (id) {dispatch(movieSliceAction.loadMovieById(id));}
     }, [dispatch, id]);
     if (loading) return <div style={{ padding: "40px", color: "white", textAlign: "center" }}>Loading...</div>;
@@ -24,6 +23,12 @@ export const MovieDetailPage: FC = () => {
         <div className={'details-main'}>
             <div className={'details-img-but'}>
                 <button className={'pag-button'} onClick={() => navigate(-1)}>Back</button>
+                {/*<button*/}
+                {/*    onClick={() => dispatch(movieSliceAction.toggleFavorite(selectedMovie))}*/}
+                {/*    className="flex items-center gap-2 mt-4 text-white"*/}
+                {/*>*/}
+                {/*    {isCurrentlyFavorite ? '❤️ In Favorites' : '🤍 Love it'}*/}
+                {/*</button>*/}
                 <img
                     src={`${imgBaseUrl}${selectedMovie.backdrop_path || selectedMovie.poster_path}`}
                     alt={selectedMovie.title}

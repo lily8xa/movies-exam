@@ -26,7 +26,6 @@ export const Movies = () => {
             searchQuery: searchQuery
         }));
     }, [dispatch, currentPage, selectedGenre, sortBy, searchQuery]);
-    // const filterMovies = movies;
     const filterMovies: MovieType[] = useMemo(() => {
         return movies; // Сервер сам надсилає глобально відсортований масив фільмів для кожної сторінки!
     }, [movies]);
@@ -34,9 +33,13 @@ export const Movies = () => {
     const displayTotalPages = selectedGenre === null
         ? serverTotalPages
         : Math.ceil(filterMovies.length / ITEMS_PER_PAGE) || 1;
+
+
+
   return (
         <div>
             <div className={'main-movies'}>
+
                 <div className={'movies-container'}>
                     {filterMovies.length > 0 ? (
                         filterMovies.map((movie: MovieType) => (

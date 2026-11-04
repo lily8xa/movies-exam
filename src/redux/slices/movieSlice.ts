@@ -14,6 +14,7 @@ type MovieSliceType={
     selectedMovie: MovieDetailType | null;
     isMenuOpen: boolean;
     sortBy: string;
+    favorites:MovieType[];
 }
 const initialState:MovieSliceType={
     results:[],
@@ -26,7 +27,7 @@ const initialState:MovieSliceType={
     selectedMovie:null,
     isMenuOpen: false,
     sortBy:'rating',
-
+    favorites:[],
 }
 interface MovieQueryParams {
     page: number;
@@ -95,9 +96,15 @@ export const movieSlice=createSlice({
             state.isMenuOpen = !state.isMenuOpen;
         },
         setSortBy: (state, action: PayloadAction<'rating' | 'date'>) => {
-            state.sortBy = action.payload;
-
+            state.sortBy = action.payload;},
+    toggleFavorite: (state, action: PayloadAction<MovieType>) => {
+        const exists = state.favorites.some(movie => movie.id === action.payload.id);
+        if (exists) {
+            state.favorites = state.favorites.filter(movie => movie.id !== action.payload.id);
+        } else {
+            state.favorites.push(action.payload);
         }
+    },
 },
 
     extraReducers:(builder)=>builder

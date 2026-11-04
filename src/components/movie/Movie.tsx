@@ -1,9 +1,12 @@
-import type {FC} from "react";
+import {type FC} from "react";
 import type {MovieType} from "../../models/movieType/MovieType.ts";
 import {Rating} from "react-simple-star-rating";
 import {useNavigate} from "react-router";
 import {Genres} from "../genres/Genres.tsx";
 import './Movie.css'
+import {useAppSelector} from "../../hooks/UseAppSelector.tsx";
+import {movieSliceAction} from "../../redux/slices/movieSlice.ts";
+import {useAppDispatch} from "../../hooks/UseAppDispatch.tsx";
 
 
 export const Movie:FC<MovieType> = ({id,title,poster_path,genre_ids,vote_average,release_date}) => {
@@ -33,8 +36,21 @@ export const Movie:FC<MovieType> = ({id,title,poster_path,genre_ids,vote_average
     const movieGenres = genre_ids
         .map((id) => genreName.find((g) => g.id === id)?.name)
         .filter(Boolean);
+    const favoriteMovies = useAppSelector((state) => state.movieSlice.favorites);
+    const isCurrentlyFavorite = favoriteMovies.some((item) => item.id === id);
+
+    const dispatch=useAppDispatch()
     return (
         <div className={'movie-main'} onClick={() => navigate(`/movies/${id}`)} >
+            <button
+                onClick={(e) => {
+                    e.stopPropagation(); // Зупиняємо клік, щоб при натисканні на сердечко не спрацьовував перехід на сторінку деталей (рядок 46)
+                    dispatch(movieSliceAction.toggleFavorite({ id, title, poster_path, genre_ids, vote_average, release_date }as MovieType));
+                }}
+                className="flex items-center gap-2 mt-4 text-white"
+            >
+                {isCurrentlyFavorite ? '❤️ In Favorites' : '🤍 Love it'}
+            </button>
             <img src={`${imgBaseUrl}${poster_path}`} alt={title}/>
             <div className={'movie-rating-wrapper'}><Rating className={'movie-rating-wrapper'}
                 initialValue={vote_average / 2}
