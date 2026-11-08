@@ -7,10 +7,10 @@ import './Movie.css'
 import {useAppSelector} from "../../hooks/UseAppSelector.tsx";
 import {movieSliceAction} from "../../redux/slices/movieSlice.ts";
 import {useAppDispatch} from "../../hooks/UseAppDispatch.tsx";
+import {PosterPreview} from "../posterPreview/PosterPreview.tsx";
 
 
 export const Movie:FC<MovieType> = ({id,title,poster_path,genre_ids,vote_average,release_date}) => {
-    const imgBaseUrl = "https://image.tmdb.org/t/p/w500";
     const navigate = useNavigate();
     const genreName:{id:number,name:string}[]=[
         {id: 28, name: "Action"},
@@ -50,7 +50,7 @@ export const Movie:FC<MovieType> = ({id,title,poster_path,genre_ids,vote_average
             >
                 {isCurrentlyFavorite ? '❤️ In Favorites' : '🤍 Love it'}
             </button>
-            <img src={`${imgBaseUrl}${poster_path}`} alt={title}/>
+            <PosterPreview posterPath={poster_path} title={title}/>
             <div className={'movie-rating-wrapper'}><Rating className={'movie-rating-wrapper'}
                 initialValue={vote_average / 2}
                 readonly={true}

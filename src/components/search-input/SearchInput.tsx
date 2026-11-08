@@ -17,7 +17,7 @@ export function SearchInput() {
         <><input className={'movie-search-input'}
             type="text"
             maxLength={35}
-            placeholder=" Enter movie name or genres"
+            placeholder=" Enter movie name"
             value={searchQuery}
             onChange={(e) => handleSearchChange(e.target.value)}
         />
