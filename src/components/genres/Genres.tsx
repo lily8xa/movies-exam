@@ -1,6 +1,7 @@
 import type {FC} from "react";
 
 interface GenreBadgeProps {
+    id:number
     name: string;
 }
 

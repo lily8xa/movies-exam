@@ -1,6 +1,5 @@
 import {type FC} from "react";
 import type {MovieType} from "../../models/movieType/MovieType.ts";
-import {Rating} from "react-simple-star-rating";
 import {useNavigate} from "react-router";
 import {Genres} from "../genres/Genres.tsx";
 import './Movie.css'
@@ -8,6 +7,7 @@ import {useAppSelector} from "../../hooks/UseAppSelector.tsx";
 import {movieSliceAction} from "../../redux/slices/movieSlice.ts";
 import {useAppDispatch} from "../../hooks/UseAppDispatch.tsx";
 import {PosterPreview} from "../posterPreview/PosterPreview.tsx";
+import {StarsRating} from "../starsRating/StarsRating.tsx";
 
 
 export const Movie:FC<MovieType> = ({id,title,poster_path,genre_ids,vote_average,release_date}) => {
@@ -51,10 +51,7 @@ export const Movie:FC<MovieType> = ({id,title,poster_path,genre_ids,vote_average
                 {isCurrentlyFavorite ? '❤️ In Favorites' : '🤍 Love it'}
             </button>
             <PosterPreview posterPath={poster_path} title={title}/>
-            <div className={'movie-rating-wrapper'}><Rating className={'movie-rating-wrapper'}
-                initialValue={vote_average / 2}
-                readonly={true}
-                size={20}/></div>
+            <div className={'movie-rating-wrapper'}><StarsRating voteAverage={vote_average} /></div>
             <div className={'name-genre'}>
                 <h1>{title}</h1>
                 <p>{release_date}</p>
@@ -63,7 +60,7 @@ export const Movie:FC<MovieType> = ({id,title,poster_path,genre_ids,vote_average
                         .filter((name): name is string => typeof name === 'string' && name.trim() !== '')
                         .map((name, index, array) => (
                             <span key={index} style={{ display: 'inline-flex', alignItems: 'center' }}>
-              <Genres name={name} />{index < array.length - 1 && <span style={{ marginRight: '4px' }}>,</span>}</span>))}
+              <Genres name={name} id={id}/>{index < array.length - 1 && <span style={{ marginRight: '4px' }}>,</span>}</span>))}
                 </div>
             </div>
 

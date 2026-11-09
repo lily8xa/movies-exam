@@ -3,8 +3,10 @@ import {useNavigate, useParams} from "react-router";
 import {useAppDispatch} from "../../hooks/UseAppDispatch.tsx";
 import {useAppSelector} from "../../hooks/UseAppSelector.tsx";
 import {movieSliceAction} from "../../redux/slices/movieSlice.ts";
-import {Genres} from "../../components/genres/Genres.tsx";
 import './MovieDetailPage.css'
+import {MovieInfo} from "../../components/movieInfo/MovieInfo.tsx";
+import {PosterPreview} from "../../components/posterPreview/PosterPreview.tsx";
+import {Genres} from "../../components/genres/Genres.tsx";
 
 export const MovieDetailPage: FC = () => {
     const { id } = useParams<{ id: string }>();
@@ -13,7 +15,6 @@ export const MovieDetailPage: FC = () => {
     const selectedMovie = useAppSelector((state) => state.movieSlice.selectedMovie);
     console.log(selectedMovie)
     const loading = useAppSelector((state) => state.movieSlice.loading);
-    const imgBaseUrl ="https://image.tmdb.org/t/p/w500";
     useEffect(() => {if (id) {dispatch(movieSliceAction.loadMovieById(id));}
     }, [dispatch, id]);
     if (loading) return <div className={'error-h'}>Loading...</div>;
@@ -22,25 +23,25 @@ export const MovieDetailPage: FC = () => {
         <div className={'details-main'}>
             <div className={'details-img-but'}>
                 <button className={'pag-button'} onClick={() => navigate(-1)}>Back</button>
-                <img src={`${imgBaseUrl}${selectedMovie.backdrop_path || selectedMovie.poster_path}`}
-                    alt={selectedMovie.title}/>
+                <PosterPreview backdropPath={selectedMovie.backdrop_path} title={selectedMovie.title}/>
+                {selectedMovie.genres && selectedMovie.genres.length > 0 && (
+                    <div className={'details-genres'}>
+                        <span>Genres: </span>
+                        {selectedMovie.genres.map((genre, index) => {
+                            const isLast = index === selectedMovie.genres.length - 1;
+                            return (
+                                <span key={genre.id}>
+          <Genres id={genre.id} name={genre.name} />
+                                    {!isLast && ", "}
+        </span>
+                            );
+                        })}
+                    </div>
+                )}
             </div>
-            <div className={'details-disc'}>
-                <h1>{selectedMovie.title}</h1>
-                <h3 className={'details-disc-hash'}># "{selectedMovie.tagline}"</h3>
-                <p>Original Title: {selectedMovie.original_title}. Run time-{selectedMovie.runtime}</p>
-                <p>Original Language: {selectedMovie.original_language}</p>
-                <p>Release Date: {selectedMovie.release_date}</p>
-                <div className={'details-genres'}>Genres: {' '}
-                    {selectedMovie.genres?.map((genre, index, array) => (
-                        <span key={index} style={{ display: 'inline-flex', alignItems: 'center' }}>
-              <Genres name={genre.name} />{index < array.length - 1 && <span style={{ marginRight: '4px' }}>,</span>}</span>))}
-                </div>
-                <div>
-                    <strong>Description:</strong>
-                    <p className={'details-description'}>{selectedMovie.overview}</p>
-                </div>
-            </div>
+
+            <MovieInfo title={selectedMovie.title} tag={selectedMovie.tagline} originalTitle={selectedMovie.original_title} originalLanguage={selectedMovie
+                .original_language} runtime={selectedMovie.runtime} releaseDate={selectedMovie.release_date} overview={selectedMovie.overview}/>
         </div>
     );
 };

@@ -14,6 +14,7 @@ export const Movies = () => {
     const currentPage = Number(searchParams.get("page")) || 1;
 
     const movies = useAppSelector((state) => state.movieSlice.results);
+    console.log(movies)
     const sortBy: string = useAppSelector((state) => state.movieSlice.sortBy);
     const selectedGenre = useAppSelector((state) => state.movieSlice.selectedGenre);
     const searchQuery = useAppSelector((state) => state.movieSlice.searchQuery) || '';
@@ -45,7 +46,6 @@ export const Movies = () => {
                 </div>
                 <Pagination total={displayTotalPages * ITEMS_PER_PAGE} limit={ITEMS_PER_PAGE}/>
             </div>
-
         </div>
     );
 };
