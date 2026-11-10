@@ -12,12 +12,12 @@ export const Movies = () => {
     const dispatch = useAppDispatch();
     const [searchParams] = useSearchParams();
     const currentPage = Number(searchParams.get("page")) || 1;
-
     const movies = useAppSelector((state) => state.movieSlice.results);
     console.log(movies)
     const sortBy: string = useAppSelector((state) => state.movieSlice.sortBy);
     const selectedGenre = useAppSelector((state) => state.movieSlice.selectedGenre);
     const searchQuery = useAppSelector((state) => state.movieSlice.searchQuery) || '';
+    const loading = useAppSelector((state) => state.movieSlice.loading);
     const serverTotalPages = useAppSelector((state) => state.movieSlice.totalPages) || 1;
     useEffect(() => {
         dispatch(movieSliceAction.loadMovies({
@@ -27,6 +27,7 @@ export const Movies = () => {
             searchQuery: searchQuery
         }));
     }, [dispatch, currentPage, selectedGenre, sortBy, searchQuery]);
+
     const filterMovies: MovieType[] = useMemo(() => {
         return movies;
     }, [movies]);
@@ -34,6 +35,8 @@ export const Movies = () => {
     const displayTotalPages = selectedGenre === null
         ? serverTotalPages
         : Math.ceil(filterMovies.length / ITEMS_PER_PAGE) || 1;
+    if (loading) return <div className={'error-h'}>Loading...</div>;
+    if (!movies) return <div className={'error-h'}>Movie not found</div>;
     return (
         <div>
             <div className={'main-movies'}>

@@ -14,8 +14,8 @@ export const SortMenu = () => {
                 onChange={(e) => dispatch(movieSliceAction.setSortBy(e.target.value as 'rating' | 'date'))}
                 className="sort-select"
             >
-                <option value="rating">Highest Rating</option>
-                <option value="date">Release Date</option>
+                <option value="vote_average.desc">Highest Rating</option>
+                <option value="primary_release_date.desc">Release Date</option>
             </select></div>
     );
 };

@@ -30,7 +30,7 @@ const initialState:MovieSliceType={
     searchQuery: '',
     selectedMovie:null,
     isMenuOpen: false,
-    sortBy:'rating',
+    sortBy:'vote_average.desc',
     favorites:[],
     genres:[],
 }
@@ -47,7 +47,8 @@ export const loadMovies= createAsyncThunk<MovieType[],
         try {
             const queryParams: MovieQueryParams = {
                 page,
-                sort_by: sortBy === 'rating' ? 'vote_average.desc' : 'primary_release_date.desc'
+                sort_by: sortBy
+                // === 'rating' ? 'vote_average.desc' : 'primary_release_date.desc'
             };
             let currentUrl = '/3/discover/movie';
             if (searchQuery && searchQuery.trim() !== '') {
@@ -97,8 +98,11 @@ export const movieSlice=createSlice({
     reducers: {
         setSelectedGenre: (state, action: PayloadAction<number | null>) => {
             state.selectedGenre = action.payload;
+            state.sortBy = 'vote_average.desc';
+
         }, setSearchQuery: (state, action: PayloadAction<string>) => {
             state.searchQuery = action.payload;
+
         },
         toggleMenu: (state) => {
             state.isMenuOpen = !state.isMenuOpen;
@@ -116,10 +120,15 @@ export const movieSlice=createSlice({
 },
 
     extraReducers:(builder)=>builder
+        .addCase(loadMovies.pending, (state) => {
+            state.loading = true;
+        })
         .addCase(loadMovies.fulfilled,(state,action:PayloadAction<MovieType[]>)=>{
-            state.results=action.payload
+            state.results=action.payload;
+            state.loading = false;
         })
         .addCase(loadMovies.rejected,(state,action)=>{
+            state.loading = false;
             console.log(state,action)
 })
         .addCase(loadMovieById.pending, (state) => {

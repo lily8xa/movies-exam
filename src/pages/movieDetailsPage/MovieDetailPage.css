@@ -44,7 +44,7 @@ flex-direction: column;
 .details-genres{
     display: flex;
     flex-wrap: wrap;
-    font-size: 30px;
+    font-size:20px;
     color: #0c0c2c;
     gap: 10px;
     text-shadow: 0 4px 12px rgba(255, 255, 255, 0.94),
@@ -53,4 +53,7 @@ flex-direction: column;
 }
 .details-description{
 font-size: 30px;
+}
+.details-main img{
+    height: 500px;
 }
