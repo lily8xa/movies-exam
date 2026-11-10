@@ -27,15 +27,10 @@ export const MovieDetailPage: FC = () => {
                 {selectedMovie.genres && selectedMovie.genres.length > 0 && (
                     <div className={'details-genres'}>
                         <span>Genres: </span>
-                        {selectedMovie.genres.map((genre, index) => {
-                            const isLast = index === selectedMovie.genres.length - 1;
-                            return (
-                                <span key={genre.id}>
-          <Genres id={genre.id} name={genre.name} />
-                                    {!isLast && ", "}
-        </span>
-                            );
-                        })}
+                        {selectedMovie.genres.map((genre: { id: number; name: string }, index: number) => (
+                            <Genres key={genre.id} id={genre.id} name={genre.name} isLast={index === selectedMovie.genres.length - 1}
+                            />
+                        ))}
                     </div>
                 )}
             </div>

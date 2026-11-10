@@ -2,6 +2,7 @@
     display: flex;
     justify-content: center;
     flex-wrap: wrap;
+    box-sizing: border-box;
     gap: 10px;
     padding: 20px;
     margin: 30px;

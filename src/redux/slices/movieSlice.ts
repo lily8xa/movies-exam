@@ -2,7 +2,10 @@ import {createAsyncThunk, createSlice, type PayloadAction} from "@reduxjs/toolki
 import type {MovieType} from "../../models/movieType/MovieType.ts";
 import {apiService} from "../../services/service/.api.service.ts";
 import type {MovieDetailType} from "../../models/movieType/MovieDetailType.ts";
-
+type GenresType={
+    id:number;
+    name:string;
+}
 type MovieSliceType={
     results:MovieType[],
     currentPage: number;
@@ -15,6 +18,7 @@ type MovieSliceType={
     isMenuOpen: boolean;
     sortBy: string;
     favorites:MovieType[];
+    genres?:GenresType[];
 }
 const initialState:MovieSliceType={
     results:[],
@@ -28,6 +32,7 @@ const initialState:MovieSliceType={
     isMenuOpen: false,
     sortBy:'rating',
     favorites:[],
+    genres:[],
 }
 interface MovieQueryParams {
     page: number;
@@ -54,6 +59,7 @@ export const loadMovies= createAsyncThunk<MovieType[],
             const response = await apiService.get<{ results: MovieType[] }>(currentUrl, {
                 params: queryParams});
             const movies = response.data.results;
+            console.log(movies)
             return thunkAPI.fulfillWithValue(movies);
         } catch (error) {
             console.log(error);
@@ -70,6 +76,18 @@ export const loadMovieById = createAsyncThunk<MovieDetailType,string>(
         } catch (error) {
             console.log(error);
             return thunkAPI.rejectWithValue('Error loading movie details');
+        }
+    }
+);
+export const loadGenres = createAsyncThunk(
+    'movieSlice/loadGenres',
+    async (_, thunkAPI) => {
+        try {
+            const response = await apiService.get('/3/genre/movie/list');
+            return response.data.genres; // Повертає масив [{id: 28, name: "Action"}, ...]
+        } catch (error) {
+            console.log(error);
+            return thunkAPI.rejectWithValue('Помилка завантаження жанрів');
         }
     }
 );
@@ -116,8 +134,13 @@ export const movieSlice=createSlice({
             state.loading = false;
             state.error = 'Error';
         })
+        .addCase(loadGenres.fulfilled, (state, action) => {
+            // У TMDB АРІ жанри зазвичай приходять як { genres: [...] },
+            // тому зберігаємо саме масив: action.payload.genres або action.payload
+            state.genres = action.payload.genres || action.payload;
+        })
 
 })
 export const movieSliceAction={
-    ...movieSlice.actions,loadMovies,loadMovieById
+    ...movieSlice.actions,loadMovies,loadMovieById,loadGenres
 }
