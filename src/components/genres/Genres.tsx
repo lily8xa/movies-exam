@@ -7,7 +7,6 @@ interface GenreBadgeProps {
 }
 
 export const Genres:FC<GenreBadgeProps> = ({name,isLast}) => {
-
     return (
         <div>
             {name}{!isLast && ", "}

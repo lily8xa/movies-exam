@@ -17,11 +17,6 @@ export const MovieInfo:FC<IMovieInfoProps> = ({title,tag,originalTitle,originalL
             <p>Original Title: {originalTitle}. Run time-{runtime}</p>
             <p>Original Language: {originalLanguage}</p>
             <p>Release Date: {releaseDate}</p>
-            {/*<div className={'details-genres'}>Genres: {' '}*/}
-            {/*    {selectedMovie.genres?.map((genre, index, array) => (*/}
-            {/*        <span key={index} style={{ display: 'inline-flex', alignItems: 'center' }}>*/}
-            {/*  <Genres name={genre.name} />{index < array.length - 1 && <span style={{ marginRight: '4px' }}>,</span>}</span>))}*/}
-            {/*</div>*/}
             <div>
                 <strong>Description:</strong>
                 <p className={'details-description'}>{overview}</p>

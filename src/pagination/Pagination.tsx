@@ -11,7 +11,7 @@ interface PaginationProps {
         const safeTotal = (typeof total !== 'number' || isNaN(total) || total <= 20) ? 10000 : total;
         const safeLimit = (typeof limit !== 'number' || isNaN(limit) || limit <= 0) ? 20 : limit;
         const calculatedMaxPage = Math.ceil(safeTotal / safeLimit);
-        const maxPage = calculatedMaxPage > 1000 ? 1000 : calculatedMaxPage;
+        const maxPage = calculatedMaxPage > 1100 ? 1100 : calculatedMaxPage;
         const changePage=(pageNumber:number)=>{setSearchParam({page:pageNumber.toString()})};
         const getPageNumber=()=>{
           const pages:(number|string)[]=[];

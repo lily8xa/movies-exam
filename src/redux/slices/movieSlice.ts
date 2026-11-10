@@ -89,7 +89,7 @@ export const loadGenres = createAsyncThunk(
     async (_, thunkAPI) => {
         try {
             const response = await apiService.get('/3/genre/movie/list');
-            return response.data.genres; // Повертає масив [{id: 28, name: "Action"}, ...]
+            return response.data.genres;
         } catch (error) {
             console.log(error);
             return thunkAPI.rejectWithValue('Помилка завантаження жанрів');
