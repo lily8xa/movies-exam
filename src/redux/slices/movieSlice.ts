@@ -19,6 +19,7 @@ type MovieSliceType={
     sortBy: string;
     favorites:MovieType[];
     genres?:GenresType[];
+    serverTotalPages: number;
 }
 const initialState:MovieSliceType={
     results:[],
@@ -33,6 +34,8 @@ const initialState:MovieSliceType={
     sortBy:'vote_average.desc',
     favorites:[],
     genres:[],
+    serverTotalPages: 500,
+
 }
 interface MovieQueryParams {
     page: number;
@@ -40,15 +43,13 @@ interface MovieQueryParams {
     with_genres?: number;
     sort_by?: string;
 }
-export const loadMovies= createAsyncThunk<MovieType[],
-    { page: number; genreId: number | null; searchQuery: string;sortBy:string  }>(
+export const loadMovies = createAsyncThunk(
     'moviesSlice/loadMovies',
-    async ({ page, genreId, searchQuery,sortBy }, thunkAPI) => {
+    async ({ page, genreId, searchQuery, sortBy }: { page: number; genreId: number | null; searchQuery: string; sortBy: string }, thunkAPI) => {
         try {
             const queryParams: MovieQueryParams = {
                 page,
                 sort_by: sortBy
-                // === 'rating' ? 'vote_average.desc' : 'primary_release_date.desc'
             };
             let currentUrl = '/3/discover/movie';
             if (searchQuery && searchQuery.trim() !== '') {
@@ -57,11 +58,14 @@ export const loadMovies= createAsyncThunk<MovieType[],
             } else if (genreId !== null) {
                 queryParams.with_genres = genreId;
             }
-            const response = await apiService.get<{ results: MovieType[] }>(currentUrl, {
+            const response = await apiService.get<{ results: MovieType[]; total_pages: number }>(currentUrl, {
+
                 params: queryParams});
-            const movies = response.data.results;
-            console.log(movies)
-            return thunkAPI.fulfillWithValue(movies);
+            console.log(response.data);
+            return thunkAPI.fulfillWithValue({
+                results: response.data.results,
+                total_pages: response.data.total_pages
+            });
         } catch (error) {
             console.log(error);
             return thunkAPI.rejectWithValue('some error');
@@ -121,10 +125,12 @@ export const movieSlice=createSlice({
 
     extraReducers:(builder)=>builder
         .addCase(loadMovies.pending, (state) => {
+
             state.loading = true;
         })
-        .addCase(loadMovies.fulfilled,(state,action:PayloadAction<MovieType[]>)=>{
-            state.results=action.payload;
+        .addCase(loadMovies.fulfilled, (state, action: PayloadAction<{ results: MovieType[]; total_pages: number }>) => {
+            state.results = action.payload.results;
+            state.serverTotalPages = action.payload.total_pages;
             state.loading = false;
         })
         .addCase(loadMovies.rejected,(state,action)=>{
@@ -144,11 +150,8 @@ export const movieSlice=createSlice({
             state.error = 'Error';
         })
         .addCase(loadGenres.fulfilled, (state, action) => {
-            // У TMDB АРІ жанри зазвичай приходять як { genres: [...] },
-            // тому зберігаємо саме масив: action.payload.genres або action.payload
             state.genres = action.payload.genres || action.payload;
         })
-
 })
 export const movieSliceAction={
     ...movieSlice.actions,loadMovies,loadMovieById,loadGenres
